@@ -52,10 +52,10 @@ FractureAI est un système d'aide à la décision médicale basé sur l'intellig
 ## 🖥️ Interface
 
 ### Page d'accueil
-![Interface accueil](docs/images/interface_accueil.png)
+![Interface accueil](docs_images//interface_accueil.png)
 
 ### Résultat d'analyse
-![Résultat fracture](docs/images/resultat_fracture.png)
+![Résultat fracture](docs_images//resultat_fracture.png)
 
 ---
 
