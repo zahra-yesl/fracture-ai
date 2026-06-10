@@ -13,7 +13,7 @@ body { font-family: 'DM Sans', sans-serif; background: #f0f4f8; }
 
 .scan-h {
   position: absolute; height: 1.5px; width: 55%;
-  background: linear-gradient(90deg, transparent, rgba(99,102,241,0.5), rgba(139,92,246,0.3), transparent);
+  background: linear-gradient(90deg, transparent, rgba(99,102,241,0.5), rgba(99,102,241,0.3), transparent);
   animation: scanH 4.5s ease-in-out infinite;
 }
 .scan-h-1 { top: 28%; animation-delay: 0s; }
@@ -27,7 +27,7 @@ body { font-family: 'DM Sans', sans-serif; background: #f0f4f8; }
 
 .scan-v {
   position: absolute; width: 1.5px; height: 45%;
-  background: linear-gradient(180deg, transparent, rgba(99,102,241,0.45), rgba(139,92,246,0.2), transparent);
+  background: linear-gradient(180deg, transparent, rgba(99,102,241,0.45), rgba(99,102,241,0.2), transparent);
   animation: scanV 5.5s ease-in-out infinite;
 }
 .scan-v-1 { left: 22%; animation-delay: 1s; }
@@ -74,7 +74,7 @@ body { font-family: 'DM Sans', sans-serif; background: #f0f4f8; }
 /* Glow divider */
 .glow-line {
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(99,102,241,0.4), rgba(139,92,246,0.25), rgba(99,102,241,0.4), transparent);
+  background: linear-gradient(90deg, transparent, rgba(99,102,241,0.4), rgba(99,102,241,0.25), rgba(99,102,241,0.4), transparent);
   animation: glowLine 3s ease-in-out infinite alternate;
 }
 @keyframes glowLine { from { opacity: 0.4; } to { opacity: 1; } }
@@ -115,7 +115,7 @@ body { font-family: 'DM Sans', sans-serif; background: #f0f4f8; }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 .fade-up { animation: fadeUp 0.4s ease forwards; }
 @keyframes spin { to { transform: rotate(360deg); } }
-.spin { animation: spin 1s linear infinite; }
+.spin { animation: spin 10s linear infinite; }
 
 /* Pulse dot */
 .pulse-dot {
@@ -138,12 +138,177 @@ body { font-family: 'DM Sans', sans-serif; background: #f0f4f8; }
 .nav-link:hover { color: #4f46e5; background: #eef2ff; }
 .nav-link.active { color: white; background: #4f46e5; }
 
-/* Stat cards */
-.stat-card {
-  text-align: center; padding: 14px 16px;
-  background: white; border: 1px solid #e8eef6;
-  border-radius: 14px;
-  box-shadow: 0 2px 12px rgba(30,58,138,0.06);
-  transition: all 0.25s;
+/* ── 3D HOLOGRAPHIC X-RAY SCANNER BACKGROUND ─────────────── */
+.bone3d-scanner-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.38;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
-.stat-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(79,70,229,0.12); border-color: #c7d2fe; }
+
+/* Subtle dot grid across the full hero */
+.hologram-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(99, 102, 241, 0.18) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99, 102, 241, 0.18) 1px, transparent 1px);
+  background-size: 36px 36px;
+  pointer-events: none;
+}
+
+/* ── Main rectangular scanner frame (X-ray lightbox) ── */
+.scanner-radar {
+  position: relative;
+  width:  950px;
+  height: 580px;
+  border: 1.5px solid rgba(99, 102, 241, 0.45);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Inner rectangle — scan area inset */
+.scanner-radar::before {
+  content: '';
+  position: absolute;
+  inset: 20px;
+  border: 1px dashed rgba(99, 102, 241, 0.32);
+  border-radius: 4px;
+}
+
+/* Centre crosshair horizontal */
+.scanner-radar::after {
+  content: '';
+  position: absolute;
+  left: 30px;
+  right: 30px;
+  top: 50%;
+  height: 1px;
+  background: rgba(99, 102, 241, 0.18);
+  transform: translateY(-50%);
+}
+
+/* Corner bracket markers — top-left */
+.scanner-radar .corner-tl,
+.scanner-radar .corner-tr,
+.scanner-radar .corner-bl,
+.scanner-radar .corner-br {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-color: rgba(99, 102, 241, 0.75);
+  border-style: solid;
+}
+
+/* Scan sweep line — moves vertically inside the rectangle */
+.hologram-scan-sweep {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 40%;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(99, 102, 241, 0.18) 70%,
+    rgba(99, 102, 241, 0.55) 100%
+  );
+  border-bottom: 2px solid rgba(99, 102, 241, 0.9);
+  box-shadow: 0 6px 28px rgba(99, 102, 241, 0.5);
+  animation: scanBounce 6s ease-in-out infinite;
+  z-index: 10;
+  pointer-events: none;
+}
+
+@keyframes scanBounce {
+  0%, 100% { top: 2%;  opacity: 0; }
+  8%        { opacity: 1; }
+  92%       { opacity: 1; }
+  50%       { top: 62%; }
+}
+
+/* 3D bone perspective container */
+.hologram-container {
+  position: relative;
+  width: 200px;
+  height: 360px;
+  transform-style: preserve-3d;
+  perspective: 1400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hologram-core {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  animation: holoRotate 22s linear infinite;
+}
+
+@keyframes holoRotate {
+  0%   { transform: rotateY(0deg)   rotateX(12deg); }
+  100% { transform: rotateY(360deg) rotateX(12deg); }
+}
+
+
+.bone-joint {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 1.5px solid rgba(99, 102, 241, 0.75);
+  background: rgba(99, 102, 241, 0.08);
+  border-radius: 50%;
+  transform-style: preserve-3d;
+  box-shadow: 0 0 12px rgba(99, 102, 241, 0.25);
+}
+
+.joint-head-top    { width: 90px;  height: 90px;  top: 10px;  border-color: rgba(99, 102, 241, 0.75); background: rgba(99, 102, 241, 0.1); }
+.joint-neck-top    { width: 58px;  height: 58px;  top: 46px;  border-color: rgba(99, 102, 241, 0.8); }
+.shaft-center      { width: 34px;  height: 34px;  top: 138px; border-color: rgba(99, 102, 241, 0.8); }
+.shaft-mid         { width: 36px;  height: 36px;  top: 178px; border-color: rgba(99, 102, 241, 0.8); }
+.joint-neck-bottom { width: 58px;  height: 58px;  top: 250px; border-color: rgba(99, 102, 241, 0.8); }
+.joint-head-bottom { width: 90px;  height: 90px;  top: 262px; border-color: rgba(99, 102, 241, 0.75); background: rgba(99, 102, 241, 0.1); }
+
+/* Central radial glow */
+.hologram-glow {
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.35) 0%, transparent 65%);
+  filter: blur(24px);
+  pointer-events: none;
+}
+
+/* Scanner HUD tags */
+.scanner-tag {
+  position: absolute;
+  top: 10px;
+  left: 14px;
+  font-family: monospace;
+  font-size: 0.62rem;
+  color: rgba(99, 102, 241, 0.8);
+  letter-spacing: 0.06em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  pointer-events: none;
+}
+.scanner-tag-right {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  font-family: monospace;
+  font-size: 0.62rem;
+  color: rgba(99, 102, 241, 0.65);
+  letter-spacing: 0.06em;
+  pointer-events: none;
+}

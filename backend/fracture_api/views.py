@@ -76,14 +76,16 @@ class PredictView(APIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
-        # ── 4. Génération du rapport via Claude API ───────────────────────
+        # ── 4. Génération du rapport via Gemini API ───────────────────────
         try:
-            api_key = settings.ANTHROPIC_API_KEY
+            api_key = settings.GEMINI_API_KEY
+            lang    = request.data.get('lang', 'FR')   # 'FR' ou 'EN' selon le frontend
             report  = generate_medical_report(
                 prediction    = inference_result['prediction'],
                 confidence    = inference_result['confidence'],
                 probabilities = inference_result['probabilities'],
-                api_key       = api_key
+                api_key       = api_key,
+                lang          = lang
             )
         except Exception as e:
             logger.error(f"Erreur génération rapport : {e}")

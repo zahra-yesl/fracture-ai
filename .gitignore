@@ -6,8 +6,8 @@ __pycache__/
 *.pyo
 .env
 
-# Model (trop lourd pour GitHub)
-backend/model/*.pth
+# Model — inclus dans le repo (93.9MB < limite GitHub 100MB)
+# backend/model/*.pth  ← décommenté pour permettre le déploiement Railway
 
 # Next.js
 frontend/node_modules/

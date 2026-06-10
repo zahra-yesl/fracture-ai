@@ -35,6 +35,8 @@ export interface MedicalReport {
   type_examen: string
   methode_ia: string
   generated_by?: string
+  differential_diagnosis?: string[]
+  follow_up_imaging?: string
 }
 
 export interface ModelInfo {
@@ -51,9 +53,10 @@ export interface ModelInfo {
 /**
  * Envoie une image au backend pour analyse.
  */
-export async function analyzeImage(file: File): Promise<PredictionResult> {
+export async function analyzeImage(file: File, lang: 'FR' | 'EN' = 'FR'): Promise<PredictionResult> {
   const formData = new FormData()
   formData.append('image', file)
+  formData.append('lang', lang)
 
   const response = await fetch(`${API_BASE_URL}/api/predict/`, {
     method: 'POST',
