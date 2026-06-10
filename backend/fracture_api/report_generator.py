@@ -33,7 +33,7 @@ def setup_phoenix_tracing():
         register(
             project_name="radisense",
             endpoint=endpoint,
-            headers={"api_key": os.getenv('PHOENIX_API_KEY', '')},
+            headers={"Authorization": f"Bearer {os.getenv('PHOENIX_API_KEY', '')}"},
         )
         # Instrument Gemini → chaque appel genai = une trace dans Phoenix
         GoogleGenAIInstrumentor().instrument()
