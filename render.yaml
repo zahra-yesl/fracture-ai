@@ -6,6 +6,7 @@ services:
     plan: free
     buildCommand: pip install -r requirements.txt
     startCommand: gunicorn predictor.wsgi --bind 0.0.0.0:$PORT --workers 1 --timeout 120
+    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput
     envVars:
       - key: DJANGO_SECRET_KEY
         value: radisense-secret-key-2024

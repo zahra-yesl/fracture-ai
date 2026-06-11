@@ -13,3 +13,5 @@ gunicorn==22.0.0
 whitenoise==6.7.0
 opencv-python-headless==4.10.0.84
 scikit-learn==1.5.1
+arize-phoenix-otel
+openinference-instrumentation-google-genai
