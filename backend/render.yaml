@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: radisense-backend
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn predictor.wsgi --bind 0.0.0.0:$PORT --workers 2 --timeout 120
+    envVars:
+      - key: DJANGO_SECRET_KEY
+        value: radisense-secret-key-2024
+      - key: DEBUG
+        value: "False"
+      - key: MODEL_PATH
+        value: model/fracture_model_final.pth
+      - key: PYTHON_VERSION
+        value: 3.11.9
