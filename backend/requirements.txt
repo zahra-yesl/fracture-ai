@@ -9,7 +9,7 @@ scikit-learn==1.6.1
 whitenoise==6.9.0
 gunicorn==23.0.0
 google-genai==1.16.1
-arize-phoenix-otel==0.8.1
+arize-phoenix-otel==0.16.1
 openinference-instrumentation-google-genai==0.1.17
 opentelemetry-sdk==1.33.0
 --extra-index-url https://download.pytorch.org/whl/cpu
