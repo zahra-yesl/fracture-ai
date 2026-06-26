@@ -22,36 +22,17 @@ const dict = {
     taglineDesc: "Système intelligent d'analyse clinique pour accompagner les radiologues et accélérer le traitement des urgences osseuses.",
     capabilitiesTitle: "Fonctionnalités Cliniques",
     features: [
-      {
-        title: "DÉTECTION RESNET50",
-        desc: "Classification haute précision entraînée sur clichés validés pour l'identification rapide des pathologies."
-      },
-      {
-        title: "EXPLICABILITÉ GRAD-CAM",
-        desc: "Cartes de chaleur visuelles mettant en évidence les régions précises ayant influencé le diagnostic de l'IA."
-      },
-      {
-        title: "RAPPORTS STRUCTURÉS",
-        desc: "Génération automatique de documentation clinique suivant des modèles radiologiques standardisés."
-      }
+      { title: "DÉTECTION RESNET50", desc: "Classification haute précision entraînée sur clichés validés pour l'identification rapide des pathologies." },
+      { title: "EXPLICABILITÉ GRAD-CAM", desc: "Cartes de chaleur visuelles mettant en évidence les régions précises ayant influencé le diagnostic de l'IA." },
+      { title: "RAPPORTS STRUCTURÉS", desc: "Génération automatique de documentation clinique suivant des modèles radiologiques standardisés." }
     ],
     startAnalysis: "Lancer l'analyse →",
     howItWorks: "Processus d'Analyse Clinique",
     steps: [
-      {
-        title: "1. Téléversement du cliché",
-        desc: "Le clinicien charge la radiographie au format JPEG ou PNG sur l'interface."
-      },
-      {
-        title: "2. Inférence IA & Grad-CAM",
-        desc: "Le modèle ResNet50 localise l'anomalie et projette une carte d'attention Grad-CAM."
-      },
-      {
-        title: "3. Rapport d'Aide à la Décision",
-        desc: "L'agent Gemini Flash synthétise les résultats en un rapport structuré pour le médecin."
-      }
+      { title: "1. Téléversement du cliché", desc: "Le clinicien charge la radiographie au format JPEG ou PNG sur l'interface." },
+      { title: "2. Inférence IA & Grad-CAM", desc: "Le modèle ResNet50 localise l'anomalie et projette une carte d'attention Grad-CAM." },
+      { title: "3. Rapport d'Aide à la Décision", desc: "L'agent Gemini Flash synthétise les résultats en un rapport structuré pour le médecin." }
     ],
-
     analyseTitle: "RadiSense — Agent Clinique IA",
     analyseSubtitle: "Aider les médecins à analyser les radiographies osseuses plus rapidement et avec une plus grande précision.",
     medicalAssistant: "ASSISTANT MÉDICAL INTELLIGENT",
@@ -86,34 +67,16 @@ const dict = {
     taglineDesc: "Intelligent clinical analysis system to support radiologists and accelerate the triage of osseous emergencies.",
     capabilitiesTitle: "Clinical Capabilities",
     features: [
-      {
-        title: "RESNET50 DETECTION",
-        desc: "High-precision deep learning model trained on validated clinical scans for pathology identification."
-      },
-      {
-        title: "GRAD-CAM EXPLAINABILITY",
-        desc: "Visual heatmaps highlighting the exact regions that influenced the AI's diagnostic confidence score."
-      },
-      {
-        title: "STRUCTURED REPORTS",
-        desc: "Automatic generation of clinical documentation following standardized radiological reporting templates."
-      }
+      { title: "RESNET50 DETECTION", desc: "High-precision deep learning model trained on validated clinical scans for pathology identification." },
+      { title: "GRAD-CAM EXPLAINABILITY", desc: "Visual heatmaps highlighting the exact regions that influenced the AI's diagnostic confidence score." },
+      { title: "STRUCTURED REPORTS", desc: "Automatic generation of clinical documentation following standardized radiological reporting templates." }
     ],
     startAnalysis: "Start Analysis →",
     howItWorks: "Clinical Analysis Workflow",
     steps: [
-      {
-        title: "1. Upload X-Ray",
-        desc: "The clinician uploads the X-Ray scan (JPEG/PNG) to the secure interface."
-      },
-      {
-        title: "2. AI Analysis & Grad-CAM",
-        desc: "The ResNet50 model localizes the anomaly and projects a Grad-CAM attention heatmap."
-      },
-      {
-        title: "3. Decision Support Report",
-        desc: "The Gemini Flash agent synthesizes findings into a structured report for the physician."
-      }
+      { title: "1. Upload X-Ray", desc: "The clinician uploads the X-Ray scan (JPEG/PNG) to the secure interface." },
+      { title: "2. AI Analysis & Grad-CAM", desc: "The ResNet50 model localizes the anomaly and projects a Grad-CAM attention heatmap." },
+      { title: "3. Decision Support Report", desc: "The Gemini Flash agent synthesizes findings into a structured report for the physician." }
     ],
     analyseTitle: "RadiSense — AI Clinical Agent",
     analyseSubtitle: "Helping physicians analyze bone radiographs faster and with greater precision.",
@@ -156,50 +119,29 @@ export default function HomePage() {
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const handleFile = useCallback((file: File) => {
-    if (!file.type.startsWith('image/')) {
-      setErrorMsg(lang === 'FR' ? 'Image requis (JPEG, PNG)' : 'Image required (JPEG, PNG)')
-      setState('error')
-      return
-    }
-    if (file.size > 10 * 1024 * 1024) {
-      setErrorMsg(lang === 'FR' ? 'Max 10 MB' : 'Max 10 MB')
-      setState('error')
-      return
-    }
-    setSelectedFile(file)
-    setPreview(URL.createObjectURL(file))
-    setState('idle')
-    setResult(null)
-    setErrorMsg('')
+    if (!file.type.startsWith('image/')) { setErrorMsg(lang === 'FR' ? 'Image requis (JPEG, PNG)' : 'Image required (JPEG, PNG)'); setState('error'); return }
+    if (file.size > 10 * 1024 * 1024) { setErrorMsg('Max 10 MB'); setState('error'); return }
+    setSelectedFile(file); setPreview(URL.createObjectURL(file))
+    setState('idle'); setResult(null); setErrorMsg('')
   }, [lang])
 
   const handleDrop = useCallback((e: React.DragEvent) => {
-    e.preventDefault()
-    setDragOver(false)
-    const file = e.dataTransfer.files[0]
-    if (file) handleFile(file)
+    e.preventDefault(); setDragOver(false)
+    const file = e.dataTransfer.files[0]; if (file) handleFile(file)
   }, [handleFile])
 
   const resetAll = () => {
-    setSelectedFile(null)
-    setPreview(null)
-    setResult(null)
-    setErrorMsg('')
-    setState('idle')
-    setReportExpanded(false)
+    setSelectedFile(null); setPreview(null); setResult(null)
+    setErrorMsg(''); setState('idle'); setReportExpanded(false)
     if (fileInputRef.current) fileInputRef.current.value = ''
   }
 
   const handleAnalyze = async () => {
     if (!selectedFile) return
-    setState('loading')
-    setResult(null)
-    setErrorMsg('')
+    setState('loading'); setResult(null); setErrorMsg('')
     try {
       const data = await analyzeImage(selectedFile, lang)
-      setResult(data)
-      setState('result')
-      setReportExpanded(true) // Expand report on complete
+      setResult(data); setState('result'); setReportExpanded(true)
     } catch (err: any) {
       setErrorMsg(err.message || (lang === 'FR' ? 'Erreur analyse' : 'Analysis error'))
       setState('error')
@@ -211,101 +153,60 @@ export default function HomePage() {
   return (
     <div style={{ minHeight: '100vh', background: '#f8fafc', display: 'flex', flexDirection: 'column' }}>
 
-      {/* ── NAVBAR ───────────────────────────────────────────── */}
-      <nav style={{ background: 'white', borderBottom: '1px solid #e2e8f0', position: 'sticky', top: 0, zIndex: 50, boxShadow: '0 1px 10px rgba(15, 23, 42, 0.03)' }}>
-        <div style={{ maxWidth: 1120, margin: '0 auto', padding: '0 24px', height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      {/* ── NAVBAR ── */}
+      <nav style={{ background: 'white', borderBottom: '1px solid #e2e8f0', position: 'sticky', top: 0, zIndex: 50, boxShadow: '0 1px 10px rgba(15,23,42,0.03)' }}>
+        {/* navbar-inner → responsive padding + height via CSS */}
+        <div className="navbar-inner" style={{ maxWidth: 1120, margin: '0 auto', padding: '0 24px', height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
 
-          {/* Left: Logo */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <div style={{ width: 38, height: 38, borderRadius: 10, background: 'linear-gradient(135deg,#4f46e5,#7c3aed)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          {/* Logo */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
+            <div style={{ width: 36, height: 36, borderRadius: 10, background: 'linear-gradient(135deg,#4f46e5,#7c3aed)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <Bone className="w-5 h-5" color="white" />
             </div>
             <div style={{ lineHeight: 1 }}>
-              <div className="font-display" style={{ color: '#0f172a', fontWeight: 800, fontSize: '1.1rem' }}>{dict[lang].title}</div>
-              <div style={{ color: '#6366f1', fontSize: '0.55rem', fontWeight: 700, letterSpacing: '0.14em', marginTop: 1 }}>CLINICAL AGENT</div>
+              <div className="font-display" style={{ color: '#0f172a', fontWeight: 800, fontSize: '1.05rem' }}>{dict[lang].title}</div>
+              <div style={{ color: '#6366f1', fontSize: '0.52rem', fontWeight: 700, letterSpacing: '0.14em', marginTop: 1 }}>CLINICAL AGENT</div>
             </div>
           </div>
 
-          {/* Center: Tabs with underline style (Medicai inspired) */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 32, height: '100%' }}>
-            <button
-              onClick={() => setMainTab('dashboard')}
-              style={{
-                border: 'none',
-                background: 'none',
-                cursor: 'pointer',
-                fontSize: '0.87rem',
-                fontWeight: mainTab === 'dashboard' ? 700 : 500,
-                color: mainTab === 'dashboard' ? '#4f46e5' : '#64748b',
-                padding: '21px 0',
-                borderBottom: mainTab === 'dashboard' ? '2px solid #4f46e5' : '2px solid transparent',
-                transition: 'all 0.2s',
-                outline: 'none'
-              }}
-            >
-              {dict[lang].dashboard}
-            </button>
-            <button
-              onClick={() => setMainTab('analyse')}
-              style={{
-                border: 'none',
-                background: 'none',
-                cursor: 'pointer',
-                fontSize: '0.87rem',
-                fontWeight: mainTab === 'analyse' ? 700 : 500,
-                color: mainTab === 'analyse' ? '#4f46e5' : '#64748b',
-                padding: '21px 0',
-                borderBottom: mainTab === 'analyse' ? '2px solid #4f46e5' : '2px solid transparent',
-                transition: 'all 0.2s',
-                outline: 'none'
-              }}
-            >
-              {dict[lang].analyseTab}
-            </button>
+          {/* Tabs — nav-tabs → responsive gap via CSS */}
+          <div className="nav-tabs" style={{ display: 'flex', alignItems: 'center', gap: 32, height: '100%' }}>
+            {(['dashboard', 'analyse'] as const).map(tab => (
+              <button
+                key={tab}
+                className="nav-tab-btn"
+                onClick={() => setMainTab(tab)}
+                style={{
+                  border: 'none', background: 'none', cursor: 'pointer',
+                  fontSize: '0.87rem',
+                  fontWeight: mainTab === tab ? 700 : 500,
+                  color: mainTab === tab ? '#4f46e5' : '#64748b',
+                  padding: '21px 0',
+                  borderBottom: mainTab === tab ? '2px solid #4f46e5' : '2px solid transparent',
+                  transition: 'all 0.2s', outline: 'none', whiteSpace: 'nowrap'
+                }}
+              >
+                {tab === 'dashboard' ? dict[lang].dashboard : dict[lang].analyseTab}
+              </button>
+            ))}
           </div>
 
-          {/* Right: Language toggle + Status badge */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          {/* Right: Lang + Status */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
             {/* Language toggle */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: 2, background: '#f1f5f9', padding: 2, borderRadius: 100, border: '1px solid #e2e8f0' }}>
-              <button
-                onClick={() => setLang('FR')}
-                style={{
-                  border: 'none',
-                  background: lang === 'FR' ? 'white' : 'transparent',
-                  color: lang === 'FR' ? '#4f46e5' : '#64748b',
-                  fontSize: '0.7rem',
-                  fontWeight: 700,
-                  padding: '4px 10px',
-                  borderRadius: 100,
-                  cursor: 'pointer',
-                  transition: 'all 0.2s',
-                  boxShadow: lang === 'FR' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none'
-                }}
-              >
-                FR
-              </button>
-              <button
-                onClick={() => setLang('EN')}
-                style={{
-                  border: 'none',
-                  background: lang === 'EN' ? 'white' : 'transparent',
-                  color: lang === 'EN' ? '#4f46e5' : '#64748b',
-                  fontSize: '0.7rem',
-                  fontWeight: 700,
-                  padding: '4px 10px',
-                  borderRadius: 100,
-                  cursor: 'pointer',
-                  transition: 'all 0.2s',
-                  boxShadow: lang === 'EN' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none'
-                }}
-              >
-                EN
-              </button>
+            <div className="lang-toggle" style={{ display: 'flex', alignItems: 'center', gap: 2, background: '#f1f5f9', padding: 2, borderRadius: 100, border: '1px solid #e2e8f0' }}>
+              {(['FR', 'EN'] as const).map(l => (
+                <button key={l} onClick={() => setLang(l)} style={{
+                  border: 'none', background: lang === l ? 'white' : 'transparent',
+                  color: lang === l ? '#4f46e5' : '#64748b',
+                  fontSize: '0.7rem', fontWeight: 700, padding: '4px 8px', borderRadius: 100,
+                  cursor: 'pointer', transition: 'all 0.2s',
+                  boxShadow: lang === l ? '0 1px 3px rgba(0,0,0,0.1)' : 'none'
+                }}>{l}</button>
+              ))}
             </div>
-
-            {/* Status active */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: 100, padding: '6px 14px' }}>
+            {/* Status badge — navbar-status → text hidden on mobile */}
+            <div className="navbar-status" style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: 100, padding: '6px 12px' }}>
               <div className="pulse-dot" />
               <span style={{ color: '#16a34a', fontSize: '0.72rem', fontWeight: 600 }}>{dict[lang].systemActive}</span>
             </div>
@@ -313,16 +214,16 @@ export default function HomePage() {
         </div>
       </nav>
 
-      {/* ── MAIN CONTENT ─────────────────────────────────────── */}
+      {/* ── MAIN ── */}
       <main style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
         {mainTab === 'dashboard' ? (
-          /* ── TAB 1: DASHBOARD (Vertical scroll layout) ───────── */
-          <div style={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
-            
-            {/* SECTION 1: HERO — full-width with 3D as absolute background */}
-            <section style={{ background: 'linear-gradient(135deg, #eef2ff 0%, #f5f3ff 50%, #ede9fe 100%)', padding: '80px 24px 88px', borderBottom: '1px solid #e2e8f0', position: 'relative', overflow: 'hidden' }}>
 
-              {/* 3D Animation — absolute background, subtle */}
+          <div style={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
+
+            {/* HERO — hero-section → responsive padding via CSS */}
+            <section className="hero-section" style={{ background: 'linear-gradient(135deg,#eef2ff 0%,#f5f3ff 50%,#ede9fe 100%)', padding: '80px 24px 88px', borderBottom: '1px solid #e2e8f0', position: 'relative', overflow: 'hidden' }}>
+
+              {/* 3D — bone3d-scanner-bg → hidden on mobile via CSS */}
               <div className="bone3d-scanner-bg">
                 <div className="hologram-grid" />
                 <div className="hologram-glow" />
@@ -330,7 +231,6 @@ export default function HomePage() {
                   <div className="hologram-scan-sweep" />
                   <div className="hologram-container">
                     <div className="hologram-core">
-
                       <div className="bone-joint shaft-center" />
                       <div className="bone-joint shaft-mid" />
                       <div className="bone-joint joint-head-top" />
@@ -342,18 +242,20 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* Foreground content — sits on top */}
-              <div style={{ maxWidth: 1120, margin: '0 auto', position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: 28 }} className="fade-up">
+              {/* Contenu hero */}
+              <div style={{ maxWidth: 1120, margin: '0 auto', position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: 24 }} className="fade-up">
                 <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'white', border: '1px solid #c7d2fe', borderRadius: 100, padding: '6px 18px', boxShadow: '0 2px 8px rgba(99,102,241,0.1)' }}>
                   <Stethoscope className="w-3.5 h-3.5" style={{ color: '#6366f1' }} />
                   <span style={{ color: '#4f46e5', fontSize: '0.74rem', fontWeight: 700, letterSpacing: '0.08em' }}>{dict[lang].medicalAssistant}</span>
                 </div>
 
-                <h1 className="font-display" style={{ fontSize: '3rem', color: '#0f172a', margin: 0, lineHeight: 1.12, maxWidth: 720 }}>
+                {/* hero-title → responsive font-size via CSS */}
+                <h1 className="hero-title font-display" style={{ fontSize: '3rem', color: '#0f172a', margin: 0, lineHeight: 1.12, maxWidth: 720 }}>
                   {dict[lang].tagline}
                 </h1>
 
-                <p style={{ color: '#64748b', fontSize: '1rem', lineHeight: 1.7, margin: 0, maxWidth: 580 }}>
+                {/* hero-subtitle → responsive font-size via CSS */}
+                <p className="hero-subtitle" style={{ color: '#64748b', fontSize: '1rem', lineHeight: 1.7, margin: 0, maxWidth: 560 }}>
                   {dict[lang].taglineDesc}
                 </p>
 
@@ -363,72 +265,67 @@ export default function HomePage() {
               </div>
             </section>
 
-            {/* SECTION 2: CLINICAL CAPABILITIES (Cards) */}
-            <section style={{ padding: '64px 24px', maxWidth: 1120, margin: '0 auto', width: '100%' }}>
+            {/* SECTION 2 — features-grid → responsive columns via CSS */}
+            <section className="section-resp" style={{ padding: '64px 24px', maxWidth: 1120, margin: '0 auto', width: '100%' }}>
               <h2 className="font-display" style={{ fontSize: '1.9rem', color: '#0f172a', textAlign: 'center', marginBottom: 36 }}>
                 {dict[lang].capabilitiesTitle}
               </h2>
-              
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 24 }}>
+              <div className="features-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 24 }}>
                 {dict[lang].features.map((feat, i) => (
                   <div key={i} className="card" style={{ padding: 28, display: 'flex', flexDirection: 'column', gap: 12, borderTop: '4px solid #6366f1' }}>
-                    <span style={{ fontSize: '0.76rem', fontWeight: 800, color: '#4f46e5', letterSpacing: '0.05em' }}>
-                      {feat.title}
-                    </span>
-                    <p style={{ fontSize: '0.85rem', color: '#64748b', lineHeight: 1.6, margin: 0 }}>
-                      {feat.desc}
-                    </p>
+                    <span style={{ fontSize: '0.76rem', fontWeight: 800, color: '#4f46e5', letterSpacing: '0.05em' }}>{feat.title}</span>
+                    <p style={{ fontSize: '0.85rem', color: '#64748b', lineHeight: 1.6, margin: 0 }}>{feat.desc}</p>
                   </div>
                 ))}
               </div>
             </section>
 
-
-
-            {/* SECTION 4: HOW IT WORKS (Separate elements layout) */}
-            <section style={{ padding: '64px 24px', maxWidth: 1120, margin: '0 auto', width: '100%' }}>
+            {/* SECTION 3 — steps-row → responsive flex via CSS */}
+            <section className="section-resp" style={{ padding: '64px 24px', maxWidth: 1120, margin: '0 auto', width: '100%' }}>
               <h2 className="font-display" style={{ fontSize: '1.9rem', color: '#0f172a', textAlign: 'center', marginBottom: 44 }}>
                 {dict[lang].howItWorks}
               </h2>
-
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 24, position: 'relative' }}>
-                {/* Horizontal flow steps */}
+              <div className="steps-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 24, position: 'relative' }}>
                 {dict[lang].steps.map((step, i) => (
                   <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', position: 'relative', zIndex: 2 }}>
-                    {/* Circle badge */}
                     <div style={{ width: 52, height: 52, borderRadius: '50%', background: '#eef2ff', color: '#4f46e5', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.1rem', fontWeight: 800, border: '2px solid #c7d2fe', marginBottom: 16, boxShadow: '0 4px 10px rgba(99,102,241,0.08)' }}>
                       0{i + 1}
                     </div>
-                    <h4 style={{ fontSize: '0.92rem', color: '#0f172a', fontWeight: 700, margin: '0 0 8px' }}>
-                      {step.title}
-                    </h4>
-                    <p style={{ fontSize: '0.82rem', color: '#64748b', lineHeight: 1.5, margin: 0, maxWidth: 260 }}>
-                      {step.desc}
-                    </p>
+                    <h4 style={{ fontSize: '0.92rem', color: '#0f172a', fontWeight: 700, margin: '0 0 8px' }}>{step.title}</h4>
+                    <p style={{ fontSize: '0.82rem', color: '#64748b', lineHeight: 1.5, margin: 0, maxWidth: 260 }}>{step.desc}</p>
                   </div>
                 ))}
               </div>
             </section>
 
           </div>
+
         ) : (
-          /* ── TAB 2: ANALYSE IA ───── */
+
+          /* ── ANALYSE IA ── */
           <div style={{ width: '100%' }}>
-            {/* MAIN INTERACTION */}
             <div style={{ maxWidth: 1120, margin: '0 auto', padding: '40px 24px 60px', position: 'relative', zIndex: 2 }}>
 
-              <div style={{ display: 'grid', gridTemplateColumns: state === 'result' ? '1.1fr 0.9fr' : '1fr', gap: 24, maxWidth: state === 'result' ? '100%' : 600, margin: '0 auto' }}>
-
-                {/* COL LEFT: Upload & confidence bars */}
+              {/* result-grid → responsive columns via CSS */}
+              <div
+                className="result-grid"
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: state === 'result' ? '1.1fr 0.9fr' : '1fr',
+                  gap: 24,
+                  maxWidth: state === 'result' ? '100%' : 600,
+                  margin: '0 auto'
+                }}
+              >
+                {/* COL LEFT */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-                  
+
                   {/* Upload Card */}
                   <div className="card" style={{ overflow: 'hidden' }}>
                     <div style={{ padding: '13px 20px', background: 'linear-gradient(135deg,#eef2ff,#f5f3ff)', borderBottom: '1px solid #e0e7ff', display: 'flex', alignItems: 'center', gap: 8 }}>
                       <ScanLine className="w-4 h-4" style={{ color: '#6366f1' }} />
                       <span style={{ fontWeight: 600, color: '#3730a3', fontSize: '0.87rem' }}>{dict[lang].uploadTitle}</span>
                     </div>
-                    
                     <div style={{ padding: 20 }}>
                       {!preview ? (
                         <div className={`drop-zone${dragOver ? ' over' : ''}`}
@@ -436,8 +333,7 @@ export default function HomePage() {
                           onDragOver={(e) => { e.preventDefault(); setDragOver(true) }}
                           onDragLeave={() => setDragOver(false)}
                           onDrop={handleDrop}
-                          onClick={() => fileInputRef.current?.click()}
-                        >
+                          onClick={() => fileInputRef.current?.click()}>
                           <div style={{ width: 56, height: 56, borderRadius: '50%', background: 'linear-gradient(135deg,#eef2ff,#e0e7ff)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 14px', border: '2px solid #c7d2fe' }}>
                             <Upload className="w-6 h-6" style={{ color: '#6366f1' }} />
                           </div>
@@ -466,13 +362,14 @@ export default function HomePage() {
                     </div>
                   </div>
 
-                  {/* Warning — after upload card */}
+                  {/* Warning */}
                   <div style={{ background: '#fffbeb', border: '1px solid #fde68a', borderLeft: '4px solid #f59e0b', borderRadius: 12, padding: '10px 16px', display: 'flex', alignItems: 'center', gap: 10 }}>
                     <AlertTriangle className="w-4 h-4" style={{ color: '#d97706', flexShrink: 0 }} />
                     <span style={{ fontSize: '0.82rem', color: '#92400e' }}>
                       <strong>{dict[lang].warningTitle}</strong> {dict[lang].warningDesc}
                     </span>
                   </div>
+
                   {selectedFile && state !== 'result' && (
                     <button className="btn-primary fade-up" onClick={handleAnalyze} disabled={state === 'loading'}>
                       {state === 'loading'
@@ -482,7 +379,6 @@ export default function HomePage() {
                     </button>
                   )}
 
-                  {/* Error display */}
                   {state === 'error' && (
                     <div style={{ background: '#fff1f2', border: '1px solid #fecdd3', borderRadius: 12, padding: '12px 16px', display: 'flex', gap: 10 }} className="fade-up">
                       <AlertTriangle className="w-4 h-4" style={{ color: '#ef4444', flexShrink: 0, marginTop: 2 }} />
@@ -490,7 +386,6 @@ export default function HomePage() {
                     </div>
                   )}
 
-                  {/* Results box with probabilities */}
                   {state === 'result' && result && (
                     <div className={`fade-up ${isFractured ? 'fracture-box' : 'normal-box'}`} style={{ padding: 20 }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 18 }}>
@@ -507,7 +402,6 @@ export default function HomePage() {
                           {result.confidence}%
                         </div>
                       </div>
-                      
                       {Object.entries(result.probabilities).map(([cls, prob]) => (
                         <div key={cls} style={{ marginBottom: 12 }}>
                           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 5, fontSize: '0.8rem' }}>
@@ -521,7 +415,6 @@ export default function HomePage() {
                           </div>
                         </div>
                       ))}
-                      
                       <div style={{ marginTop: 10, paddingTop: 10, borderTop: '1px solid rgba(0,0,0,0.06)', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6, fontSize: '0.73rem', color: '#94a3b8' }}>
                         <span>📐 {result.image_info.dimensions}</span>
                         <span>📁 {result.image_info.size_kb} KB</span>
@@ -530,19 +423,15 @@ export default function HomePage() {
                   )}
                 </div>
 
-                {/* COL RIGHT: Grad-CAM overlay & clinical report */}
+                {/* COL RIGHT */}
                 {state === 'result' && result && (
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }} className="fade-up">
-                    
-                    {/* Grad-CAM visuals */}
+
+                    {/* Grad-CAM */}
                     <div className="card" style={{ overflow: 'hidden' }}>
                       <div style={{ display: 'flex', borderBottom: '1px solid #f1f5f9' }}>
                         {(['gradcam', 'heatmap'] as const).map(tab => (
-                          <button
-                            key={tab}
-                            onClick={() => setActiveTab(tab)}
-                            style={{ flex: 1, padding: '12px 16px', border: 'none', background: 'none', cursor: 'pointer', fontSize: '0.79rem', fontWeight: 500, borderBottom: activeTab === tab ? '2px solid #6366f1' : '2px solid transparent', color: activeTab === tab ? '#6366f1' : '#94a3b8', transition: 'all 0.2s' }}
-                          >
+                          <button key={tab} onClick={() => setActiveTab(tab)} style={{ flex: 1, padding: '12px 16px', border: 'none', background: 'none', cursor: 'pointer', fontSize: '0.79rem', fontWeight: 500, borderBottom: activeTab === tab ? '2px solid #6366f1' : '2px solid transparent', color: activeTab === tab ? '#6366f1' : '#94a3b8', transition: 'all 0.2s' }}>
                             {tab === 'gradcam' ? dict[lang].gradcamOverlay : dict[lang].heatmapOnly}
                           </button>
                         ))}
@@ -557,7 +446,7 @@ export default function HomePage() {
                       </div>
                     </div>
 
-                    {/* Clinical Report Drawer */}
+                    {/* Rapport */}
                     {result.report && (
                       <div className="card" style={{ overflow: 'hidden' }}>
                         <button onClick={() => setReportExpanded(!reportExpanded)} style={{ width: '100%', padding: '14px 20px', border: 'none', background: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: reportExpanded ? '1px solid #f1f5f9' : 'none' }}>
@@ -572,58 +461,40 @@ export default function HomePage() {
                           </div>
                           {reportExpanded ? <ChevronUp className="w-4 h-4" style={{ color: '#94a3b8' }} /> : <ChevronDown className="w-4 h-4" style={{ color: '#94a3b8' }} />}
                         </button>
-
                         {reportExpanded && (
                           <div style={{ padding: '18px 20px', display: 'flex', flexDirection: 'column', gap: 16 }}>
-                            {/* Statut */}
                             <div>
                               <label style={{ fontSize: '0.65rem', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Statut</label>
                               <p style={{ fontWeight: 700, color: isFractured ? '#dc2626' : '#16a34a', margin: '4px 0 0', fontSize: '0.93rem' }}>{result.report.statut}</p>
                             </div>
-                            
-                            {/* Résumé clinique */}
                             {result.report.resume_clinique && (
                               <div>
                                 <label style={{ fontSize: '0.65rem', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Résumé clinique</label>
                                 <p style={{ color: '#334155', margin: '4px 0 0', fontSize: '0.82rem', lineHeight: 1.65 }}>{result.report.resume_clinique}</p>
                               </div>
                             )}
-
-                            {/* Diagnostic Différentiel */}
                             {result.report.differential_diagnosis && result.report.differential_diagnosis.length > 0 && (
                               <div>
-                                <label style={{ fontSize: '0.65rem', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
-                                  {dict[lang].differentialTitle}
-                                </label>
+                                <label style={{ fontSize: '0.65rem', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.1em' }}>{dict[lang].differentialTitle}</label>
                                 <div style={{ marginTop: 6, display: 'flex', flexWrap: 'wrap', gap: 6 }}>
                                   {result.report.differential_diagnosis.map((item: string, i: number) => (
-                                    <span key={i} style={{ fontSize: '0.74rem', background: '#f8fafc', color: '#475569', padding: '4px 10px', borderRadius: 6, border: '1px solid #e2e8f0', fontWeight: 500 }}>
-                                      {item}
-                                    </span>
+                                    <span key={i} style={{ fontSize: '0.74rem', background: '#f8fafc', color: '#475569', padding: '4px 10px', borderRadius: 6, border: '1px solid #e2e8f0', fontWeight: 500 }}>{item}</span>
                                   ))}
                                 </div>
                               </div>
                             )}
-                            
-                            {/* Recommandation */}
                             {result.report.recommandation && (
                               <div style={{ background: '#eef2ff', borderRadius: 10, padding: '12px 14px', borderLeft: '3px solid #6366f1' }}>
                                 <label style={{ fontSize: '0.65rem', fontWeight: 700, color: '#6366f1', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Recommandation</label>
                                 <p style={{ color: '#1e1b4b', margin: '4px 0 0', fontSize: '0.82rem', lineHeight: 1.65, fontWeight: 500 }}>{result.report.recommandation}</p>
                               </div>
                             )}
-
-                            {/* Imagerie de suivi */}
                             {result.report.follow_up_imaging && (
                               <div>
-                                <label style={{ fontSize: '0.65rem', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
-                                  {dict[lang].imagingTitle}
-                                </label>
+                                <label style={{ fontSize: '0.65rem', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.1em' }}>{dict[lang].imagingTitle}</label>
                                 <p style={{ color: '#334155', margin: '4px 0 0', fontSize: '0.82rem', lineHeight: 1.65, fontWeight: 500 }}>{result.report.follow_up_imaging}</p>
                               </div>
                             )}
-
-                            {/* Actions suggérées */}
                             {result.report['actions_suggérées']?.length > 0 && (
                               <div>
                                 <label style={{ fontSize: '0.65rem', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Actions suggérées</label>
@@ -637,9 +508,8 @@ export default function HomePage() {
                                 </div>
                               </div>
                             )}
-
-                            {/* Bas de rapport */}
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, paddingTop: 10, borderTop: '1px solid #f1f5f9' }}>
+                            {/* report-meta-grid → responsive via CSS */}
+                            <div className="report-meta-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, paddingTop: 10, borderTop: '1px solid #f1f5f9' }}>
                               <div>
                                 <label style={{ fontSize: '0.65rem', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Méthode IA</label>
                                 <p style={{ color: '#64748b', margin: '4px 0 0', fontSize: '0.73rem' }}>{result.report.methode_ia}</p>
@@ -649,7 +519,6 @@ export default function HomePage() {
                                 <p style={{ color: '#6366f1', margin: '4px 0 0', fontSize: '0.73rem', fontWeight: 700 }}>{result.report.generated_by}</p>
                               </div>
                             </div>
-                            
                             {result.report.mise_en_garde && (
                               <div style={{ background: '#fffbeb', border: '1px solid #fde68a', borderRadius: 10, padding: '10px 14px', fontSize: '0.73rem', color: '#92400e' }}>
                                 {result.report.mise_en_garde}
@@ -660,9 +529,6 @@ export default function HomePage() {
                       </div>
                     )}
 
-
-
-                    {/* Start new scan button */}
                     <button onClick={resetAll} style={{ background: 'white', border: '1px solid #e0e7ff', borderRadius: 12, padding: '12px 20px', cursor: 'pointer', color: '#6366f1', fontWeight: 600, fontSize: '0.85rem', transition: 'all 0.2s', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
                       {dict[lang].newAnalysisBtn}
                     </button>
@@ -670,17 +536,16 @@ export default function HomePage() {
                 )}
               </div>
             </div>
-
           </div>
         )}
       </main>
 
-      {/* ── FOOTER ───────────────────────────────────────────── */}
+      {/* ── FOOTER — footer-inner → responsive via CSS ── */}
       <footer style={{ background: 'linear-gradient(135deg,#1e1b4b,#312e81)', padding: '32px 24px', position: 'relative', overflow: 'hidden' }}>
         <div className="dot-grid" style={{ position: 'absolute', inset: 0, opacity: 0.3 }} />
         <div style={{ maxWidth: 1120, margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <div className="glow-line" style={{ marginBottom: 24 }} />
-          <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16, alignItems: 'flex-start' }}>
+          <div className="footer-inner" style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16, alignItems: 'flex-start' }}>
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
                 <div style={{ width: 30, height: 30, borderRadius: 8, background: 'rgba(255,255,255,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -692,14 +557,14 @@ export default function HomePage() {
                 {dict[lang].clinicalSupport} — {dict[lang].power}
               </p>
             </div>
-            <div style={{ textTransform: 'none', textAlign: 'right' }}>
+            <div className="footer-right" style={{ textAlign: 'right' }}>
               <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.7rem', margin: '0 0 6px', fontWeight: 500 }}>RadiSense AI — Clinical Agent</p>
               <p style={{ color: 'rgba(255,255,255,0.22)', fontSize: '0.65rem', margin: 0 }}>{dict[lang].footerDisclaimer}</p>
             </div>
           </div>
           <div style={{ borderTop: '1px solid rgba(255,255,255,0.07)', marginTop: 20, paddingTop: 16, textAlign: 'center' }}>
             <p style={{ color: 'rgba(255,255,255,0.22)', fontSize: '0.64rem', margin: 0 }}>
-              &copy; {new Date().getFullYear()} RadiSense · {dict[lang].footerDisclaimer} · Academic Demonstration
+              &copy; {new Date().getFullYear()} RadiSense · {dict[lang].footerDisclaimer}
             </p>
           </div>
         </div>
